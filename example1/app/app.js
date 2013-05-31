@@ -21,23 +21,8 @@ var users = [
 
 define(
     function(){
-
+        console.log('App loaded');
         window.App = Ember.Application.create();
-
-        App.Router.map(function(){
-            this.resource('user', {
-                path: '/users/:user_id'
-            });
-        });
-
-        App.UserRoute = Ember.Route.extend({
-
-            model: function(argParams){
-                var tmpUserId = argParams.user_id - 1;
-                return users[tmpUserId];
-            }
-
-        });
 
         App.ApplicationRoute = Ember.Route.extend({
 
@@ -48,6 +33,8 @@ define(
             }
 
         });
+
+        App.deferReadiness();
 
     }
 );

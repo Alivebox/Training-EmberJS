@@ -1,5 +1,5 @@
 define(
     [
-        'routes/ApplicationRoute'
+        'app/routes/RouterMap'
     ]
 );
