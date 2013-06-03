@@ -26,8 +26,6 @@ define(
 
         App.ApplicationRoute = Ember.Route.extend({
 
-            interval: null,
-
             model: function(){
                 return users;
             }
