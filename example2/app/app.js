@@ -23,28 +23,6 @@ define(
     function(){
         console.log('App loaded');
         window.App = Ember.Application.create();
-
-        App.ApplicationRoute = Ember.Route.extend({
-
-            model: function(){
-                return users;
-            },
-
-            events: {
-
-                createUser: function(){
-                    var tmpUsers = this.modelFor('application');
-                    var tmpNewUser = {
-                        id: tmpUsers.length
-                    };
-                    tmpUsers.pushObject(tmpNewUser);
-                    this.transitionTo('editUser',tmpNewUser);
-                }
-
-            }
-
-        });
-
         App.deferReadiness();
 
     }

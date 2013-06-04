@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,height=device-height">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <meta name="title" content="Example2">
+    <meta name="description" content="EmberJS Example 2">
+    <meta name="author" content="juank.memphis@gmail.com">
+
+    <title>Example 2</title>
+
+    <script data-main="entrypoint" src="resources/js/require.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" >
+
+</head>
+<body>
+
+    <script type="text/x-handlebars" >
+        <h1>Application</h1>
+        <ul>
+            <li>{{#linkTo "about"}}About{{/linkTo}}</li>
+            <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+        </ul>
+        {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" id="about" >
+        <h2>About</h2>
+        <ul>
+            <li>
+                {{#linkTo "about.location"}}Location{{/linkTo}}
+            </li>
+            <li>
+                {{#linkTo "about.product"}}Product{{/linkTo}}
+            </li>
+        </ul>
+        {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" id="about/location" >
+        <h2>Location</h2>
+    </script>
+
+    <script type="text/x-handlebars" id="about/product" >
+        <h2>Product</h2>
+    </script>
+
+    <script type="text/x-handlebars" id="login" >
+        <h2>Login</h2>
+    </script>
+
+</body>
+</html>

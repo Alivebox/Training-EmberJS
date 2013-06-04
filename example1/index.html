@@ -20,6 +20,11 @@
         <div class="container" >
             <div class="row-fluid " >
                 <ul class="nav nav-list span3 well" >
+                    <li>
+                        <a href="#" {{action createUser}} >
+                            + New User
+                        </a>
+                    </li>
                     {{#each model}}
                     <li>{{#linkTo "user" this}} {{first}} {{/linkTo}}</li>
                     {{/each}}
@@ -42,6 +47,28 @@
             <dt>Last</dt>
             <dd>{{last}}</dd>
         </dl>
+        {{#linkTo "editUser" this class="btn btn-primary" }} Edit {{/linkTo}}
+    </script>
+
+    <script type="text/x-handlebars" id="editUser" >
+        <h2>
+            Edit User
+        </h2>
+        <form class="form-inline" {{ action save on="submit" }} >
+            <label>
+                First:
+                {{input type="text" value=first}}
+            </label><br>
+
+            <label>
+                Last:
+                {{input type="text" value=last}}
+            </label>
+
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Done</button>
+            </div>
+        </form>
     </script>
 
 </body>

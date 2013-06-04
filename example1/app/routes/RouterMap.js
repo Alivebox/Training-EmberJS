@@ -5,16 +5,12 @@ define(
         App.Router.map(function(){
             this.resource('user', {
                 path: '/users/:user_id'
+            },function(){
+                this.route();
             });
-        });
-
-        App.UserRoute = Ember.Route.extend({
-
-            model: function(argParams){
-                var tmpUserId = argParams.user_id - 1;
-                return users[tmpUserId];
-            }
-
+            this.resource('editUser',{
+                path: '/users/:user_id/edit'
+            });
         });
 
     }
