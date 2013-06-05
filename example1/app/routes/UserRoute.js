@@ -1,4 +1,7 @@
 define(
+    [
+        'app/controllers/UserController'
+    ],
     function(){
 
         console.log('UserRoute loaded...');

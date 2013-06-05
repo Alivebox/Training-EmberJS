@@ -25,8 +25,8 @@
                             + New User
                         </a>
                     </li>
-                    {{#each model}}
-                    <li>{{#linkTo "user" this}} {{first}} {{/linkTo}}</li>
+                    {{#each controller}}
+                    <li>{{#linkTo "user" this}} {{first}} {{last}} {{/linkTo}}</li>
                     {{/each}}
                 </ul>
                 <div class="row-fluid well span9" >
