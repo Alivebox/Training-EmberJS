@@ -58,6 +58,22 @@ require(
     function(){
         require(
             [
+                'app/compile-templates/user/editUser'
+            ],
+            function(){
+                console.log('Add templates ...');
+            }
+        );
+    }
+);
+
+require(
+    [
+        'application'
+    ],
+    function(){
+        require(
+            [
                 'app/routes/RouterMap'
             ],
             function(){

@@ -5036,7 +5036,7 @@ var Backburner = requireModule('backburner').Backburner,
 
 /**
   Runs the passed target and method inside of a RunLoop, ensuring any
-  deferred actions including bindings and views updates are flushed at the
+  deferred actions including bindings and templates updates are flushed at the
   end.
 
   Normally you should not need to invoke this method yourself. However if
@@ -5238,7 +5238,7 @@ Ember.run.cancelTimers = function () {
 
   You should call this method anytime you need any changed state to propagate
   throughout the app immediately without repainting the UI (which happens
-  in the later 'render' queue added by the `ember-views` package).
+  in the later 'render' queue added by the `ember-templates` package).
 
   ```javascript
   Ember.run.sync();
@@ -5369,7 +5369,7 @@ Ember.run.scheduleOnce = function(queue, target, method) {
   For instance, if you'd like to schedule an operation to happen
   after all DOM element operations have completed within the current
   run loop, you can make use of the `afterRender` run loop queue (added
-  by the `ember-views` package, along with the preceding `render` queue
+  by the `ember-templates` package, along with the preceding `render` queue
   where all the DOM element operations happen). Example:
 
   ```javascript
@@ -10288,7 +10288,7 @@ var get = Ember.get, set = Ember.set;
 
   Properties and observers allow one object to observe changes to a
   property on another object. This is one of the fundamental ways that
-  models, controllers and views communicate with each other in an Ember
+  models, controllers and templates communicate with each other in an Ember
   application.
 
   Any object that has this mixin applied can be used in observer
@@ -13908,7 +13908,7 @@ Ember Runtime
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var jQuery = Ember.imports.jQuery;
@@ -13929,7 +13929,7 @@ Ember.$ = jQuery;
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 if (Ember.$) {
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/dnd.html#dndevents
@@ -13949,7 +13949,7 @@ if (Ember.$) {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 /* BEGIN METAMORPH HELPERS */
@@ -14091,7 +14091,7 @@ Ember.ViewUtils = {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -14592,7 +14592,7 @@ Ember._RenderBuffer.prototype =
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
@@ -14803,10 +14803,10 @@ Ember.EventDispatcher = Ember.Object.extend(/** @scope Ember.EventDispatcher.pro
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
-// Add a new named queue for rendering views that happens
+// Add a new named queue for rendering templates that happens
 // after bindings have synced, and a queue for scheduling actions
 // that that should occur after view rendering.
 var queues = Ember.run.queues,
@@ -14820,7 +14820,7 @@ queues.splice(indexOf.call(queues, 'actions')+1, 0, 'render', 'afterRender');
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -14873,7 +14873,7 @@ var states = {};
 
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -14906,8 +14906,8 @@ var childViewsProperty = Ember.computed(function() {
 Ember.warn("The VIEW_PRESERVES_CONTEXT flag has been removed and the functionality can no longer be disabled.", Ember.ENV.VIEW_PRESERVES_CONTEXT !== false);
 
 /**
-  Global hash of shared templates. This will automatically be populated
-  by the build tools so that you can store your Handlebars templates in
+  Global hash of shared compile-templates. This will automatically be populated
+  by the build tools so that you can store your Handlebars compile-templates in
   separate files that get loaded into JavaScript at buildtime.
 
   @property TEMPLATES
@@ -14948,7 +14948,7 @@ Ember.CoreView = Ember.Object.extend(Ember.Evented, {
 
   _parentView: null,
 
-  // return the current view, not including virtual views
+  // return the current view, not including virtual templates
   concreteView: Ember.computed(function() {
     if (!this.isVirtual) { return this; }
     else { return get(this, 'parentView'); }
@@ -15124,8 +15124,8 @@ ViewCollection.prototype = {
 var EMPTY_ARRAY = [];
 
 /**
-  `Ember.View` is the class in Ember responsible for encapsulating templates of
-  HTML content, combining templates with data to render as sections of a page's
+  `Ember.View` is the class in Ember responsible for encapsulating compile-templates of
+  HTML content, combining compile-templates with data to render as sections of a page's
   DOM, and registering and responding to user-initiated events.
 
   ## HTML Tag
@@ -15390,7 +15390,7 @@ class:
   <div id="ember1" class="ember-view">I am the template</div>
   ```
 
-  Within an Ember application is more common to define a Handlebars templates as
+  Within an Ember application is more common to define a Handlebars compile-templates as
   part of a page:
 
   ```html
@@ -15413,7 +15413,7 @@ class:
   Assigning a value to both `template` and `templateName` properties will throw
   an error.
 
-  For views classes that may have a template later defined (e.g. as the block
+  For templates classes that may have a template later defined (e.g. as the block
   portion of a `{{view}}` Handlebars helper call in another template or in
   a subclass), you can provide a `defaultTemplate` property set to compiled
   template function. If a template is not later provided for the view instance
@@ -15486,7 +15486,7 @@ class:
   ## Layouts
 
   Views can have a secondary template that wraps their main template. Like
-  primary templates, layouts can be any function that  accepts an optional
+  primary compile-templates, layouts can be any function that  accepts an optional
   context parameter and returns a string of HTML that will be inserted inside
   view's tag. Views whose HTML element is self closing (e.g. `<input />`)
   cannot have a layout and this property will be ignored.
@@ -15550,7 +15550,7 @@ class:
   as the first argument to the method and an  `Ember.View` object as the
   second. The `Ember.View` will be the view whose rendered HTML was interacted
   with. This may be the view with the `eventManager` property or one of its
-  descendent views.
+  descendent templates.
 
   ```javascript
   AView = Ember.View.extend({
@@ -15558,7 +15558,7 @@ class:
       doubleClick: function(event, view){
         // will be called when when an instance's
         // rendered element or any rendering
-        // of this views's descendent
+        // of this templates's descendent
         // elements is clicked
       }
     })
@@ -15581,7 +15581,7 @@ class:
   });
   ```
 
-  Similarly a view's event manager will take precedence for events of any views
+  Similarly a view's event manager will take precedence for events of any templates
   rendered as a descendent. A method name that matches an event name will not
   be called if the view instance was rendered inside the HTML representation of
   a view that has an `eventManager` property defined that handles events of the
@@ -15697,7 +15697,7 @@ Ember.View = Ember.CoreView.extend(
     The name of the template to lookup if no template is provided.
 
     `Ember.View` will look for a template with this name in this view's
-    `templates` object. By default, this will be a global object
+    `compile-templates` object. By default, this will be a global object
     shared in `Ember.TEMPLATES`.
 
     @property templateName
@@ -15710,7 +15710,7 @@ Ember.View = Ember.CoreView.extend(
     The name of the layout to lookup if no layout is provided.
 
     `Ember.View` will look for a template with this name in this view's
-    `templates` object. By default, this will be a global object
+    `compile-templates` object. By default, this will be a global object
     shared in `Ember.TEMPLATES`.
 
     @property layoutName
@@ -15795,7 +15795,7 @@ Ember.View = Ember.CoreView.extend(
   },
 
   /**
-    The object from which templates should access properties.
+    The object from which compile-templates should access properties.
 
     This object will be passed to the template function each time the render
     method is called, but it is up to the individual function to decide what
@@ -15873,7 +15873,7 @@ Ember.View = Ember.CoreView.extend(
   /**
     @private
 
-    Array of child views. You should never edit this array directly.
+    Array of child templates. You should never edit this array directly.
     Instead, use `appendChild` and `removeFromParent`.
 
     @property childViews
@@ -16081,7 +16081,7 @@ Ember.View = Ember.CoreView.extend(
     var lengthBefore = this.lengthBeforeRender,
         lengthAfter  = this.lengthAfterRender;
 
-    // If there were child views created during the last call to render(),
+    // If there were child templates created during the last call to render(),
     // remove them under the assumption that they will be re-created when
     // we re-render.
 
@@ -16357,9 +16357,9 @@ Ember.View = Ember.CoreView.extend(
 
     To use, pass a function that performs a DOM operation.
 
-    Before your function is called, this view and all child views will receive
+    Before your function is called, this view and all child templates will receive
     the `willInsertElement` event. After your function is invoked, this view
-    and all of its child views will receive the `didInsertElement` event.
+    and all of its child templates will receive the `didInsertElement` event.
 
     ```javascript
     view._insertElementLater(function() {
@@ -16386,7 +16386,7 @@ Ember.View = Ember.CoreView.extend(
     automatically.
 
     If your application uses the `rootElement` property, you must append
-    the view within that element. Rendering views outside of the `rootElement`
+    the view within that element. Rendering templates outside of the `rootElement`
     is not supported.
 
     Note that this method just schedules the view to be appended; the DOM
@@ -16438,10 +16438,10 @@ Ember.View = Ember.CoreView.extend(
 
   /**
     Creates a DOM representation of the view and all of its
-    child views by recursively calling the `render()` method.
+    child templates by recursively calling the `render()` method.
 
     After the element has been created, `didInsertElement` will
-    be called on this view and all of its child views.
+    be called on this view and all of its child templates.
 
     @method createElement
     @return {Ember.View} receiver
@@ -16483,7 +16483,7 @@ Ember.View = Ember.CoreView.extend(
   /**
     @private
 
-    Run this callback on the current view (unless includeSelf is false) and recursively on child views.
+    Run this callback on the current view (unless includeSelf is false) and recursively on child templates.
 
     @method invokeRecursively
     @param fn {Function}
@@ -16538,7 +16538,7 @@ Ember.View = Ember.CoreView.extend(
   },
 
   /**
-    Destroys any existing element along with the element for any child views
+    Destroys any existing element along with the element for any child templates
     as well. If the view does not currently have a element, then this method
     will do nothing.
 
@@ -16573,7 +16573,7 @@ Ember.View = Ember.CoreView.extend(
 
     Triggers the `willDestroyElement` event (which invokes the
     `willDestroyElement()` method if it exists) on this view and all child
-    views.
+    templates.
 
     Before triggering `willDestroyElement`, it first triggers the
     `willClearRender` event recursively.
@@ -16597,7 +16597,7 @@ Ember.View = Ember.CoreView.extend(
     @private
 
     If this view's element changes, we need to invalidate the caches of our
-    child views so that we do not retain references to DOM elements that are
+    child templates so that we do not retain references to DOM elements that are
     no longer needed.
 
     @method _elementDidChange
@@ -16681,7 +16681,7 @@ Ember.View = Ember.CoreView.extend(
     element is first created. If you change the `tagName` for an element, you
     must destroy and recreate the view element.
 
-    By default, the render buffer will use a `<div>` tag for views.
+    By default, the render buffer will use a `<div>` tag for templates.
 
     @property tagName
     @type String
@@ -16798,7 +16798,7 @@ Ember.View = Ember.CoreView.extend(
 
     Setup a view, but do not finish waking it up.
     - configure `childViews`
-    - register the view with the global views hash, which is used for event
+    - register the view with the global templates hash, which is used for event
       dispatch
 
     @method init
@@ -16808,7 +16808,7 @@ Ember.View = Ember.CoreView.extend(
 
     this._super();
 
-    // setup child views. be sure to clone the child views array first
+    // setup child templates. be sure to clone the child templates array first
     this._childViews = this._childViews.slice();
 
     Ember.assert("Only arrays are allowed for 'classNameBindings'", Ember.typeOf(this.classNameBindings) === 'array');
@@ -16893,7 +16893,7 @@ Ember.View = Ember.CoreView.extend(
 
   /**
     You must call `destroy` on a view to destroy the view (and all of its
-    child views). This will remove the view from any parent node, then make
+    child templates). This will remove the view from any parent node, then make
     sure that the DOM element managed by the view can be released by the
     memory manager.
 
@@ -17286,7 +17286,7 @@ Ember.View.notifyMutationListeners = function() {
 };
 
 /**
-  Global views hash
+  Global templates hash
 
   @property views
   @static
@@ -17294,7 +17294,7 @@ Ember.View.notifyMutationListeners = function() {
 */
 Ember.View.views = {};
 
-// If someone overrides the child views computed property when
+// If someone overrides the child templates computed property when
 // defining their class, we want to be able to process the user's
 // supplied childViews and then restore the original computed property
 // at view initialization time. This happens in Ember.ContainerView's init
@@ -17331,7 +17331,7 @@ Ember.View.states = states;
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -17379,7 +17379,7 @@ Ember.View.states._default = {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var preRender = Ember.View.states.preRender = Ember.create(Ember.View.states._default);
@@ -17420,7 +17420,7 @@ Ember.merge(preRender, {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -17509,7 +17509,7 @@ Ember.merge(inBuffer, {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -17624,7 +17624,7 @@ Ember.merge(inDOM, {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var destroyingError = "You can't call %@ on a view being destroyed", fmt = Ember.String.fmt;
@@ -17691,7 +17691,7 @@ var states = Ember.View.cloneStates(Ember.View.states);
 
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set;
@@ -17700,11 +17700,11 @@ var ViewCollection = Ember._ViewCollection;
 
 /**
   A `ContainerView` is an `Ember.View` subclass that implements `Ember.MutableArray`
-  allowing programatic management of its child views.
+  allowing programatic management of its child templates.
 
   ## Setting Initial Child Views
 
-  The initial array of child views can be set in one of two ways. You can
+  The initial array of child templates can be set in one of two ways. You can
   provide a `childViews` property at creation time that contains instance of
   `Ember.View`:
 
@@ -17740,7 +17740,7 @@ var ViewCollection = Ember._ViewCollection;
 
   ## Adding and Removing Child Views
 
-  The container view implements `Ember.MutableArray` allowing programatic management of its child views.
+  The container view implements `Ember.MutableArray` allowing programatic management of its child templates.
 
   To remove a view, pass that view into a `removeObject` call on the container view.
 
@@ -17842,7 +17842,7 @@ var ViewCollection = Ember._ViewCollection;
   A `template`, `templateName`, `defaultTemplate`, `layout`, `layoutName` or
   `defaultLayout` property on a container view will not result in the template
   or layout being rendered. The HTML contents of a `Ember.ContainerView`'s DOM
-  representation will only be the rendered HTML of its child views.
+  representation will only be the rendered HTML of its child templates.
 
   ## Binding a View to Display
 
@@ -17962,9 +17962,9 @@ Ember.ContainerView = Ember.View.extend(Ember.MutableArray, {
     `renderToBuffer` method.
 
     @method childViewsWillChange
-    @param {Ember.Array} views the child views array before mutation
+    @param {Ember.Array} views the child templates array before mutation
     @param {Number} start the start position of the mutation
-    @param {Number} removed the number of child views removed
+    @param {Number} removed the number of child templates removed
   **/
   childViewsWillChange: function(views, start, removed) {
     this.propertyWillChange('childViews');
@@ -17994,10 +17994,10 @@ Ember.ContainerView = Ember.View.extend(Ember.MutableArray, {
     appropriate place in the buffer.
 
     @method childViewsDidChange
-    @param {Ember.Array} views the array of child views afte the mutation has occurred
+    @param {Ember.Array} views the array of child templates afte the mutation has occurred
     @param {Number} start the start position of the mutation
-    @param {Number} removed the number of child views removed
-    @param {Number} the number of child views added
+    @param {Number} removed the number of child templates removed
+    @param {Number} the number of child templates added
   */
   childViewsDidChange: function(views, start, removed, added) {
     if (added > 0) {
@@ -18048,7 +18048,7 @@ Ember.merge(states._default, {
 
 Ember.merge(states.inBuffer, {
   childViewsDidChange: function(parentView, views, start, added) {
-    throw new Error('You cannot modify child views while in the inBuffer state');
+    throw new Error('You cannot modify child templates while in the inBuffer state');
   }
 });
 
@@ -18113,7 +18113,7 @@ function insertViewCollection(view, viewCollection, previous, buffer) {
 (function() {
 /**
 @module ember
-@submodule ember-views
+@submodule ember-templates
 */
 
 var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
@@ -18122,7 +18122,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
   `Ember.CollectionView` is an `Ember.View` descendent responsible for managing
   a collection (an array or array-like object) by maintaining a child view object
   and associated DOM representation for each item in the array and ensuring
-  that child views and their associated rendered HTML are updated when items in
+  that child templates and their associated rendered HTML are updated when items in
   the array are added, removed, or replaced.
 
   ## Setting content
@@ -18173,7 +18173,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
   Setting the `tagName` property of a `CollectionView` to any of
   "ul", "ol", "table", "thead", "tbody", "tfoot", "tr", or "select" will result
-  in the item views receiving an appropriately matched `tagName` property.
+  in the item templates receiving an appropriately matched `tagName` property.
 
   Given an empty `<body>` and the following code:
 
@@ -18206,7 +18206,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
   Ember.CollectionView.CONTAINER_MAP['article'] = 'section'
   ```
 
-  ## Programatic creation of child views
+  ## Programatic creation of child templates
 
   For cases where additional customization beyond the use of a single
   `itemViewClass` or `tagName` matching is required CollectionView's
@@ -18260,10 +18260,10 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
   manipulated. Instead, add, remove, replace items from its `content` property.
   This will trigger appropriate changes to its rendered HTML.
 
-  ## Use in templates via the `{{collection}}` `Ember.Handlebars` helper
+  ## Use in compile-templates via the `{{collection}}` `Ember.Handlebars` helper
 
   `Ember.Handlebars` provides a helper specifically for adding
-  `CollectionView`s to templates. See `Ember.Handlebars.collection` for more
+  `CollectionView`s to compile-templates. See `Ember.Handlebars.collection` for more
   details
 
   @class CollectionView
@@ -18366,7 +18366,7 @@ Ember.CollectionView = Ember.ContainerView.extend(/** @scope Ember.CollectionVie
       emptyView.removeFromParent();
     }
 
-    // Loop through child views that correspond with the removed items.
+    // Loop through child templates that correspond with the removed items.
     // Note that we loop from the end of the array to the beginning because
     // we are mutating it as we go.
     var childViews = this._childViews, childView, idx, len;
@@ -18391,7 +18391,7 @@ Ember.CollectionView = Ember.ContainerView.extend(/** @scope Ember.CollectionVie
   /**
     Called when a mutation to the underlying content array occurs.
 
-    This method will replay that mutation against the views that compose the
+    This method will replay that mutation against the templates that compose the
     `Ember.CollectionView`, ensuring that the view reflects the model.
 
     This array observer is added in `contentDidChange`.
@@ -18453,7 +18453,7 @@ Ember.CollectionView = Ember.ContainerView.extend(/** @scope Ember.CollectionVie
 
 /**
   A map of parent tags to their default child tags. You can add
-  additional parent tags if you want collection views that use
+  additional parent tags if you want collection templates that use
   a particular parent tag to default to a child tag.
 
   @property CONTAINER_MAP
@@ -18551,9 +18551,9 @@ Ember.ViewTargetActionSupport = Ember.Mixin.create(Ember.TargetActionSupport, {
 Ember Views
 
 @module ember
-@submodule ember-views
+@submodule ember-templates
 @requires ember-runtime
-@main ember-views
+@main ember-templates
 */
 
 })();
@@ -19047,7 +19047,7 @@ Ember.assert("Ember Handlebars requires Handlebars version 1.0.0-rc.4, COMPILER_
 
   The `Ember.Handlebars` object is the standard Handlebars library, extended to
   use Ember's `get()` method instead of direct property access, which allows
-  computed properties to be used inside templates.
+  computed properties to be used inside compile-templates.
 
   To create an `Ember.Handlebars` template, call `Ember.Handlebars.compile()`.
   This will return a function that can be used by `Ember.View` for rendering.
@@ -19178,7 +19178,7 @@ Ember.Handlebars.Compiler.prototype.mustache = function(mustache) {
 };
 
 /**
-  Used for precompilation of Ember Handlebars templates. This will not be used
+  Used for precompilation of Ember Handlebars compile-templates. This will not be used
   during normal app execution.
 
   @method precompile
@@ -19384,7 +19384,7 @@ Ember.Handlebars.registerHelper('helperMissing', function(path, options) {
   });
   ```
 
-  The above bound helper can be used inside of templates as follows:
+  The above bound helper can be used inside of compile-templates as follows:
 
   ```handlebars
   {{capitalize name}}
@@ -19472,7 +19472,7 @@ Ember.Handlebars.registerHelper('helperMissing', function(path, options) {
   ## Use with blocks not supported
 
   Bound helpers do not support use with Handlebars blocks or
-  the addition of child views of any kind.
+  the addition of child templates of any kind.
 
   @method registerBoundHelper
   @for Ember.Handlebars
@@ -19646,7 +19646,7 @@ function evaluateUnboundHelper(context, fn, normalizedProperties, options) {
   @private
 
   Overrides Handlebars.template so that we can distinguish
-  user-created, top-level templates from inner contexts.
+  user-created, top-level compile-templates from inner contexts.
 
   @method template
   @for Ember.Handlebars
@@ -19798,7 +19798,7 @@ Ember._Metamorph = Ember.Mixin.create({
   init: function() {
     this._super();
     this.morph = Metamorph();
-    Ember.deprecate('Supplying a tagName to Metamorph views is unreliable and is deprecated. You may be setting the tagName on a Handlebars helper that creates a Metamorph.', !this.tagName);
+    Ember.deprecate('Supplying a tagName to Metamorph templates is unreliable and is deprecated. You may be setting the tagName on a Handlebars helper that creates a Metamorph.', !this.tagName);
   },
 
   beforeRender: function(buffer) {
@@ -20673,7 +20673,7 @@ EmberHandlebars.registerHelper('bindAttr', function(options) {
       view.registerObserver(normalized.root, normalized.path, observer);
     }
 
-    // if this changes, also change the logic in ember-views/lib/views/view.js
+    // if this changes, also change the logic in ember-templates/lib/templates/view.js
     if ((type === 'string' || (type === 'number' && !isNaN(value)))) {
       ret.push(attr + '="' + Handlebars.Utils.escapeExpression(value) + '"');
     } else if (value && type === 'boolean') {
@@ -21246,7 +21246,7 @@ var get = Ember.get, handlebarsGet = Ember.Handlebars.get, fmt = Ember.String.fm
 
   As with the `{{view}}`, helper options passed to the `{{collection}}` will be
   set on the resulting `Ember.CollectionView` as properties. Additionally,
-  options prefixed with `item` will be applied to the views rendered for each
+  options prefixed with `item` will be applied to the templates rendered for each
   item (note the camelcasing):
 
   ```handlebars
@@ -21307,7 +21307,7 @@ Ember.Handlebars.registerHelper('collection', function(path, options) {
   Ember.assert(fmt("%@ #collection: Could not find itemViewClass %@", [data.view, itemViewPath]), !!itemViewClass);
 
   // Go through options passed to the {{collection}} helper and extract options
-  // that configure item views instead of the collection itself.
+  // that configure item templates instead of the collection itself.
   for (var prop in hash) {
     if (hash.hasOwnProperty(prop)) {
       match = prop.match(/^item(.)(.*)$/);
@@ -21823,11 +21823,11 @@ Ember.Handlebars.registerHelper('each', function(path, options) {
   {{/if}}
   ```
 
-  This helper looks for templates in the global `Ember.TEMPLATES` hash. If you
+  This helper looks for compile-templates in the global `Ember.TEMPLATES` hash. If you
   add `<script>` tags to your page with the `data-template-name` attribute set,
   they will be compiled and placed in this hash automatically.
 
-  You can also manually register templates by adding them to the hash:
+  You can also manually register compile-templates by adding them to the hash:
 
   ```javascript
   Ember.TEMPLATES["my_cool_template"] = Ember.Handlebars.compile('<b>{{user}}</b>');
@@ -22246,13 +22246,13 @@ Ember.TextField = Ember.View.extend(Ember.TextSupport,
 
   /**
     Whether they `keyUp` event that triggers an `action` to be sent continues
-    propagating to other views.
+    propagating to other templates.
 
     By default, when the user presses the return key on their keyboard and
     the text field has an `action` set, the action will be sent to the view's
     controller and the key event will stop propagating.
 
-    If you would like parent views to receive the `keyUp` event even after an
+    If you would like parent templates to receive the `keyUp` event even after an
     action has been dispatched, set `bubbles` to true.
 
     @property bubbles
@@ -23142,14 +23142,14 @@ Ember.Handlebars.registerHelper('textarea', function(options) {
 /**
   @private
 
-  Find templates stored in the head tag as script tags and make them available
+  Find compile-templates stored in the head tag as script tags and make them available
   to `Ember.CoreView` in the global `Ember.TEMPLATES` object. This will be run
   as as jQuery DOM-ready callback.
 
   Script tags with `text/x-handlebars` will be compiled
   with Ember's Handlebars and are suitable for use as a view's template.
   Those with type `text/x-raw-handlebars` will be compiled with regular
-  Handlebars and are suitable for use in views' computed properties.
+  Handlebars and are suitable for use in templates' computed properties.
 
   @method bootstrap
   @for Ember.Handlebars
@@ -23173,7 +23173,7 @@ Ember.Handlebars.bootstrap = function(ctx) {
       templateName = script.attr('data-template-name') || script.attr('id') || 'application',
       template = compile(script.html());
 
-    // For templates which have a name, we save them and then remove them from the DOM
+    // For compile-templates which have a name, we save them and then remove them from the DOM
     Ember.TEMPLATES[templateName] = template;
 
     // Remove script tag from DOM
@@ -23190,9 +23190,9 @@ function bootstrap() {
   attempted to bootstrap at the point that the application is loaded.
 
   We also tie this to document ready since we're guaranteed that all
-  the inline templates are present at this point.
+  the inline compile-templates are present at this point.
 
-  There's no harm to running this twice, since we remove the templates
+  There's no harm to running this twice, since we remove the compile-templates
   from the DOM after processing.
 */
 
@@ -25277,7 +25277,7 @@ Ember.Route = Ember.Object.extend({
     template, configured with the controller for the route.
 
     This method can be overridden to set up and render additional or
-    alternative templates.
+    alternative compile-templates.
 
     @method renderTemplate
     @param {Object} controller the route's controller
@@ -25943,7 +25943,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     ```
 
     You can specify the view class that the outlet uses to contain and manage the
-    templates rendered into it.
+    compile-templates rendered into it.
 
     ``` handlebars
     {{outlet viewClass=App.SectionContainer}}
@@ -26285,7 +26285,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
     There are several possible target objects for `{{action}}` helpers:
 
-    In a typical Ember application, where views are managed through use of the
+    In a typical Ember application, where templates are managed through use of the
     `{{outlet}}` helper, actions will bubble to the current controller, then
     to the current route, and then up the route hierarchy.
 
@@ -26724,7 +26724,7 @@ Ember.NoneLocation = Ember.Object.extend({
 
   formatURL: function(url) {
     // The return value is not overly meaningful, but we do not want to throw
-    // errors when test code renders templates containing {{action href=true}}
+    // errors when test code renders compile-templates containing {{action href=true}}
     // helpers.
     return url;
   }
@@ -27170,7 +27170,7 @@ var get = Ember.get,
   container lookups before consulting the container for registered
   items:
 
-  * templates are looked up on `Ember.TEMPLATES`
+  * compile-templates are looked up on `Ember.TEMPLATES`
   * other names are looked up on the application after converting
     the name. For example, `controller:post` looks up
     `App.PostController` by default.
@@ -27442,7 +27442,7 @@ DeprecatedContainer.prototype = {
   listener on the `body`.
 
   If a `mousedown` event occurs, Ember will look at the target of the event and
-  start walking up the DOM node tree, finding corresponding views and invoking
+  start walking up the DOM node tree, finding corresponding templates and invoking
   their `mouseDown` method as it goes.
 
   `Ember.Application` has a number of default events that it listens for, as
@@ -27479,9 +27479,9 @@ DeprecatedContainer.prototype = {
   ```
 
   The `rootElement` can be either a DOM element or a jQuery-compatible selector
-  string. Note that *views appended to the DOM outside the root element will
+  string. Note that *templates appended to the DOM outside the root element will
   not receive events.* If you specify a custom root element, make sure you only
-  append views inside it!
+  append templates inside it!
 
   To learn more about the advantages of event delegation and the Ember view
   layer, and a list of the event listeners that are setup by default, visit the
@@ -27547,7 +27547,7 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
 
   /**
     The `Ember.EventDispatcher` responsible for delegating events to this
-    application's views.
+    application's templates.
 
     The event dispatcher is created by the application at initialization time
     and sets up event listeners on the DOM element described by the
@@ -27570,7 +27570,7 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
     instances.
 
     If you would like additional events to be delegated to your
-    views, set your `Ember.Application`'s `customEvents` property
+    templates, set your `Ember.Application`'s `customEvents` property
     to a hash containing the DOM event name as the key and the
     corresponding view method name as the value. For example:
 
@@ -28036,9 +28036,9 @@ Ember.Application.reopenClass({
 
     It also configures the container:
 
-    * registered views are created every time they are looked up (they are
+    * registered templates are created every time they are looked up (they are
       not singletons)
-    * registered templates are not factories; the registered value is
+    * registered compile-templates are not factories; the registered value is
       returned directly.
     * the router receives the application as its `namespace` property
     * all controllers receive the router as their `target` and `controllers`
@@ -28089,7 +28089,7 @@ Ember.Application.reopenClass({
 
   This function defines the default lookup rules for container lookups:
 
-  * templates are looked up on `Ember.TEMPLATES`
+  * compile-templates are looked up on `Ember.TEMPLATES`
   * other names are looked up on the application after classifying the name.
     For example, `controller:post` looks up `App.PostController` by default.
   * if the default lookup fails, look for registered classes on the container
