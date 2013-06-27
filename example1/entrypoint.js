@@ -58,8 +58,8 @@ require(
     function(){
         require(
             [
-                'app/compile-templates/user/user',
-                'app/compile-templates/user/editUser'
+                'app/compiled-templates/user/user',
+                'app/compiled-templates/user/editUser'
             ],
             function(){
                 console.log('Add templates ...');

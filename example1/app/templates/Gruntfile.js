@@ -15,8 +15,8 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    "../compile-templates/user/editUser.js": "user/editUser.handlebars",
-                    "../compile-templates/user/user.js": "user/user.handlebars"
+                    "../compiled-templates/user/editUser.js": "user/editUser.handlebars",
+                    "../compiled-templates/user/user.js": "user/user.handlebars"
                 }
             }
         }
