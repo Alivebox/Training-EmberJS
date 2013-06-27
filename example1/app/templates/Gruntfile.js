@@ -10,10 +10,8 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     namespace: "App.templates",
-                    processName: function(argFileName){
-                        var tmpSlashLastIndex = argFileName.lastIndexOf("/") + 1;
-                        var tmpDotLastIndex = argFileName.lastIndexOf(".");
-                        return argFileName.substring(tmpSlashLastIndex,tmpDotLastIndex);
+                    templateName: function(argFileName){
+                        return argFileName.replace(/^.*[\\\/]/, '');
                     }
                 },
                 files: {
