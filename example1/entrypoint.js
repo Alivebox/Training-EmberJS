@@ -58,6 +58,7 @@ require(
     function(){
         require(
             [
+                'app/compile-templates/user/user',
                 'app/compile-templates/user/editUser'
             ],
             function(){

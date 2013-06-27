@@ -4,6 +4,8 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
 
+        //pkg: grunt.file.readJSON('package.json'),
+
         emberTemplates: {
             compile: {
                 options: {
@@ -12,9 +14,9 @@ module.exports = function (grunt) {
                         return argFileName.replace(/^.*[\\\/]/, '');
                     }
                 },
-                all: {
-                    src:['user/*.handlebars'],
-                    dest:'../compile-templates/user/'
+                files: {
+                    "../compile-templates/user/editUser.js": "user/editUser.handlebars",
+                    "../compile-templates/user/user.js": "user/user.handlebars"
                 }
             }
         }
